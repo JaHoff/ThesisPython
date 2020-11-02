@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 """
+A set of common functions which are regularly used throughout the thesis, centralized for 
+ease-of-access and updating.
+
 Created on Fri Feb 21 14:37:31 2020
 
-@author: USER
+@author: Jurriaan
 """
 import numpy as np
 import random
-#import scipy.fftpack as fft
+
 
 import warnings as warn
 
@@ -192,14 +195,17 @@ def sampleSphereFib(N, randomize = False):
     return points
 
 def NormalizeArrayToDtype(arr, dType):
-    
+    """Normalize a data array and convert it to a data type for image displays"""
     warn.filterwarnings("ignore")
     im = np.array(arr/np.max(arr) * 255 , dtype = dType)
     return im
 
 #%% PSF manipulation and cost functions
+
+
 def costFunction(psf):
-    """Simple cost function for coarse PSF grids"""
+    """Simple cost function for coarse PSF grids \n
+    Penalize the PSF for cost outside of the central pixel, which would hold the optimum"""
     W,H = psf.shape
     
     weights = np.zeros(psf.shape)
@@ -223,8 +229,11 @@ def costFunction(psf):
 from scipy.special import j1 as bessel
 from os import getcwd
 from PlottingFunctions import Simple2DImage
+
 def costFunctionAiry(psf):
-    """Simple cost function for coarse PSF grids"""
+    """Simple cost function for coarse PSF grids \n
+    
+    Score the PSF against the ideal Airy disk"""
     W,H = psf.shape
     
     ang = np.degrees(np.arcsin(30/100e3))/2 #deg / px
@@ -254,7 +263,8 @@ def costFunctionAiry(psf):
 
 def PSFanalysis(normals, samplepoints, resolution = 100., cutout = 0, size=100e3):
     """Do a analysis of PSF for a series of view directions represented by a array of normal vectors \n
-    Returns a complex128 poins spread function, and the uv sampling grid"""
+    Inputs: a set of normal vectors for evaluating and the set of 3-d sample points / baselines [3,n] \n
+    Returns a complex128 poins spread function, the uv sampling grid, and a cost array related to the normal view directions"""
     # 
     
     L = int(size/resolution)    
@@ -309,7 +319,9 @@ def PSFanalysis(normals, samplepoints, resolution = 100., cutout = 0, size=100e3
     
 def PSFanalysisSlow(normals, samplepoints,  resolution = 15., cutout = 0, size=100e3, printprogress = False):
     """Stepwise PSF analysis for a series of view directions represented by a array of normal vectors \n
-    Returns a complex128 poins spread function, and the uv sampling grid"""
+    Returns a complex128 poins spread function, and the uv sampling grid \n
+    
+    Slow variant is meant as a slower piecemeal approach than a direct fft, which uses less memory."""
     # Do a analysis of PSF for a series of view directions represented by a array of normal vectors
     # NOT SEEING ANY ADVANTAGES OVER THE NORMAL IFFT2 ATM....
     L = int(size/resolution)    
@@ -481,6 +493,8 @@ def ConvertL4Coordinates(pointstate, centerstate = []):
     return L4
 
 def ExtrapolateSwarmMotion(x, y, z, pos):
+    """Extrapolate the position of the central swarm core using the mean motion of all swarm satellites \n
+    Requires x,y,z [t,n] data of all swarm satellites and a initial core position [3]"""
     N = x.shape[0]
     # Propagate motion of the core:
     

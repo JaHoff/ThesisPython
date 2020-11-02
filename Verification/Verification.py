@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-General function verification algorithm
+General call function for the verification of other algorithms
+
+Will attempt to verify the correct working of the defined subfunctions, and 
+report its results
+
 Created on Wed Mar 11 10:32:27 2020
 
 @author: Jurriaan van 't Hoff

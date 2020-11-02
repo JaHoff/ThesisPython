@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+Used to load and analyse the results of large amounts of optimisation results
 Created on Sun May 31 14:29:34 2020
 
 @author: mrfan

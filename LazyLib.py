@@ -13,7 +13,8 @@ from shutil import copy
 def SyncDataFiles(targetedTransfer = False, origDir = None, targetDir = None, copyTargetDirContents = False):
     """    Synchronize TUDAT data results with the local Python data folder \n
     Default operation only synchronizes tudat data output files to the python local folders \n
-    Can be used as a general folder copy+paste automisation using targetedTransfer"""
+    Can be used as a general folder copy+paste automisation using targetedTransfer \n
+    Prevent synchronisation of certain folders by including a .txt file name nosync.txt"""
     
     if(targetedTransfer == False):
         computerID = socket.gethostname();
@@ -57,7 +58,8 @@ def SyncDataFiles(targetedTransfer = False, origDir = None, targetDir = None, co
 def SyncDataOptimization(targetedTransfer = False, origDir = None, targetDir = None, copyTargetDirContents = False):
     """    Synchronize TUDAT data results with the local Python data folder \n
     Default operation only synchronizes tudat data output files to the python local folders \n
-    Can be used as a general folder copy+paste automisation using targetedTransfer"""
+    Can be used as a general folder copy+paste automisation using targetedTransfer\n
+    Prevent synchronisation of certain folders by including a .txt file name nosync.txt"""
     
     if(targetedTransfer == False):
         computerID = socket.gethostname();
@@ -120,12 +122,9 @@ def RelativeFolder(d):
     
     return relfol
 
-def UpdateFiguresToFolders():
-    
-    
-    return
 
 def CreateFigureDirs():
+    """Run through the folder dictionary defined below, and create any missing folders if necessary"""
     for i in range(0,len(Names)):
         D = folder_dict[Names[i]]
         CheckDir(D)    
@@ -150,6 +149,7 @@ if owd[-6:] != 'Python':
 
 os.chdir('../Thesis paper/Figures/')
     
+#%% Global dictionaries with relative folders used for result outputs
 d = os.getcwd()
 folder_dict ={
     "Abstract": d+ "/Abstract/",
@@ -199,7 +199,7 @@ Constants ={
     "AU": 1.495978707E11,
     "G": 6.6743015E-11
     }
-#CreateFigureDirs()
+
 
 os.chdir(owd)
 

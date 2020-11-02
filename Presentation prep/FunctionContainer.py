@@ -1,32 +1,31 @@
 # -*- coding: utf-8 -*-
 """
-Container for animation of figures
+Container file with code for class-based figures for easy animation generation
+
+Figures can be created as a derived subclass from modularfigure with function drawuntilentry()
+defining the general plotting script for the figure. These figures can then be animated using the defined
+AnimateXXX functions
+
 Created on Mon Oct  5 14:15:02 2020
 
-@author: USER
+@author: Jurriaan
 """
 
 import numpy as np
 import sys 
 
 import os
-from os import chdir
-from os import getcwd
+from os import chdi
 
 import subprocess
 
 from matplotlib import pyplot as pp
-from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.mplot3d import Axes3D # Needs to be imported to support older python versions
 from matplotlib.ticker import FormatStrFormatter
 
 from tqdm import tqdm
 
 import pandas as pd
-import matplotlib.dates as mdates
-
-
-
-
 
 sys.path.append('../')
 chdir('../')
@@ -50,7 +49,8 @@ def vectorProj(v1,v2):
 #%% Animate plot
 
 def GrabFolders(folder):
-    # Create folder
+    """Create folder for the output of the animation and its frames, and retrieve
+    the location of ffmpeg.exe based on the socket of the computer"""
     folder_frames = folder + 'Frames/'
     
     CheckDir(folder)
@@ -60,6 +60,10 @@ def GrabFolders(folder):
     from socket import gethostname
     computerID = gethostname();
     
+    ########
+    # Code necessary to assist with working from different locations
+    # Computer's unique socket ID is tied to the location of ffmpeg
+    ########
     if computerID == 'DESKTOP-2477IF6': # Laptop
         ffmpeg_loc = "C:/Users/mrfan/Anaconda3/pkgs/ffmpeg-4.2.2-he774522_0/Library/bin/"
     elif computerID == 'DESKTOP-VDTVGEC': # desktop

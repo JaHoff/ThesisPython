@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Container for the functions used in the verification algorithm
+Called from Verification.py
 Created on Wed Mar 11 10:34:16 2020
 
 @author: Jurriaan van ' Hoff

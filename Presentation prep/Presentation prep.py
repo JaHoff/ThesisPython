@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
 Animated figure generation for presentation
+Calls on class-based figures defined in FunctionContainer
+Most figure generations commented out by default as they require some time to generate
+
 Created on Mon Oct  5 14:14:18 2020
 
-@author: USER
+@author: Jurriaan
 """
 
 from FunctionContainer import *
@@ -37,40 +40,36 @@ set_name = '35sat_champ'
 
 
 yr = int(365.25 * 24 / 4)
-#%% 
+#%% Data import, pre-processing
 PF.CloseAll()
 
-# Avoid unnecessarily running over this multiple times
-if 'doOnce' not in globals():
-    print("run setup!")
-    file_history = f"propagationHistory_{set_name}.dat"
-    file_core = f"corePosition_{set_name}.dat"
-    # compute initial satellite positions relative to core
-    t, x, y, z, vx, vy, vz,ddd  = DI.ImportPropagationHistory(datafolder + file_history,0, False)
-    sat = np.concatenate((x,y,z), axis=1)
-    
-    BL_x, BL_y, BL_z, BL_c,  BLrx, BLry, BLrz, BLrc, BL_m, BLr_m  = GF.GetBaseLines(x,y,z, vx, vy, vz, t)
-    moon = DI.ImportMoonHistory(datafolder + f"propagationHistory_{set_name}_moon.dat")
-    L4 = DI.computeL4Location(moon)
-    
-    core = DI.ImportSingleColumnFile(datafolder + file_core)
-    core_pos = GF.ExtrapolateSwarmMotion(x, y, z, core)
-    #barycentric satellite motion
-    co_x , co_y, co_z, L4b = DI.ConvertToBarycentricFrame(moon, sat, exportL4 = True, fixedL4 = True)
-    # barycentric core motion
-    core_x , core_y, core_z, L4b = DI.ConvertToBarycentricFrame(moon, core_pos, exportL4 = True, fixedL4 = True)
-    
-    conf_x, conf_y, conf_z = co_x-core_x, co_y-core_y, co_z-core_z
-    
-    t = (t-t[0])/(24*3600)
-    doOnce = True
-    
-    
+file_history = f"propagationHistory_{set_name}.dat"
+file_core = f"corePosition_{set_name}.dat"
+# compute initial satellite positions relative to core
+t, x, y, z, vx, vy, vz,ddd  = DI.ImportPropagationHistory(datafolder + file_history,0, False)
+sat = np.concatenate((x,y,z), axis=1)
+
+BL_x, BL_y, BL_z, BL_c,  BLrx, BLry, BLrz, BLrc, BL_m, BLr_m  = GF.GetBaseLines(x,y,z, vx, vy, vz, t)
+moon = DI.ImportMoonHistory(datafolder + f"propagationHistory_{set_name}_moon.dat")
+L4 = DI.computeL4Location(moon)
+
+core = DI.ImportSingleColumnFile(datafolder + file_core)
+core_pos = GF.ExtrapolateSwarmMotion(x, y, z, core)
+#barycentric satellite motion
+co_x , co_y, co_z, L4b = DI.ConvertToBarycentricFrame(moon, sat, exportL4 = True, fixedL4 = True)
+# barycentric core motion
+core_x , core_y, core_z, L4b = DI.ConvertToBarycentricFrame(moon, core_pos, exportL4 = True, fixedL4 = True)
+
+conf_x, conf_y, conf_z = co_x-core_x, co_y-core_y, co_z-core_z
+
+t = (t-t[0])/(24*3600)
+
+# Variables determining animation speed
 oneyrspd = 2
 fiveyrspd = 6
 print("lets-a-go")
 
-#%%
+#%% Figure to view viable baseline history in a design
 logic = np.ones(BL_m.shape)
 logic[BL_m > 100e3] = 0
 logic[BL_m < 500] = 0

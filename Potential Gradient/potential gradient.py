@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Experiment with the gradient of the potential field theta
+Experiment with the gradient of the potential field theta and generate various relevant figures
 Created on Tue Apr 28 15:53:16 2020
 
 @author: Jurriez

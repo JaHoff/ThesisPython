@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """
+A quick testing grounds to test the implementation of code in development.
+
+Not annotated, and messy, for obvious reasons
 Created on Thu Feb 20 16:15:45 2020
 
 @author: USER

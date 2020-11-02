@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Plotting functions file
+Contains several sets of code used to ease plotting standard figure formats.
 
-Contains several useful plotting algorithms for different data types
+Code later deprecated and replaced by class-based plotting, see Presentation prep.py
+
+As a result code is not fully maintained anymore
+
+Old code still relies on this library however, which is why it is kept around
+
 Created on Thu Feb 20 16:17:04 2020
 
 @author: Jurriaan van 't Hoff
@@ -26,6 +31,18 @@ matplotlib.rc('font', **font)
 def Simple3DPlot(x, y, z, title='', savefig = False, figfolder = '', name = 'placeholder.png', xlabel = 'x [km]', ylabel = 'y [km]', zlabel='z [km]',
                  xmod = 1000., ymod = 1000., zmod = 1000., xlim = None, ylim = None , zlim = None,
                  fig = None, ax = None):
+    """Create a simple 3-d plot of a x,y,z dataset \n
+    INPUT: \n
+    x,y,z: Data arrays 1d or 2d, 2d will use [:,i] to plot multiple lines from a single column \n
+    title: Title for figure \n
+    savefig: Save figure? \n
+    figfolder: folder to save figure in \n
+    name: file name \n
+    x/y/zlabel: labels to assign to x,y,z axes \n
+    x/y/zmod: scale modifiers (def. 1000, converts to km) \n
+    x/y/zlim: set limits for x,y,z axes \n
+    fig,ax: Provide the function with an existing figure/axis ,otherwise create a new one.
+    """
     
     if fig == None or ax == None:
         fig = pp.figure()
@@ -54,9 +71,21 @@ def Simple3DPlot(x, y, z, title='', savefig = False, figfolder = '', name = 'pla
 #    fig.show()
     return fig, ax
     
-def Simple3DScatter(x, y, z, title='', savefig = False, figfolder = '', name = 'placeholder.png', xlabel = 'x [km]', ylabel = 'y [km]', zlabel='z [km]',
-                 xmod = 1000., ymod = 1000., zmod = 1000., fig = None, ax = None, color = None, marker=None):
-        
+def Simple3DScatter(x, y, z, title='', savefig = False, figfolder = '', name = 'placeholder.png', xlabel = 'x [km]', ylabel = 'y [km]', 
+                    zlabel='z [km]', xmod = 1000., ymod = 1000., zmod = 1000., fig = None, ax = None, color = None, marker=None):
+    """Create a simple 3-d scatter plot of a x,y,z dataset \n
+    INPUT: \n
+    x,y,z: Data arrays 1d or 2d, 2d will use [:,i] to plot multiple lines from a single column \n
+    title: Title for figure \n
+    savefig: Save figure? \n
+    figfolder: folder to save figure in \n
+    name: file name \n
+    x/y/zlabel: labels to assign to x,y,z axes \n
+    x/y/zmod: scale modifiers (def. 1000, converts to km) \n
+    x/y/zlim: set limits for x,y,z axes \n
+    fig,ax: Provide the function with an existing figure/axis ,otherwise create a new one. \n
+    color,marker: set scatterplot color and marker
+    """
     if fig == None or ax == None:
         fig = pp.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -83,6 +112,21 @@ def Simple3DScatter(x, y, z, title='', savefig = False, figfolder = '', name = '
 
 def PlotAnnotated3D(x,y,z,title='', savefig = False, figfolder = '', name = 'placeholder.png', xlabel = 'x', ylabel = 'y', zlabel='z',
                  xmod = 1., ymod = 1., zmod = 1., fig = None, ax = None, mkr=None, lgnd = None):
+    """Create a simple 3-d scatter plot with annotations showing data value of a x,y,z dataset \n
+    INPUT: \n
+    x,y,z: Data arrays 1d or 2d, 2d will use [:,i] to plot multiple lines from a single column \n
+    title: Title for figure \n
+    savefig: Save figure? \n
+    figfolder: folder to save figure in \n
+    name: file name \n
+    x/y/zlabel: labels to assign to x,y,z axes \n
+    x/y/zmod: scale modifiers (def. 1000, converts to km) \n
+    x/y/zlim: set limits for x,y,z axes \n
+    fig,ax: Provide the function with an existing figure/axis ,otherwise create a new one. \n
+    color,marker: set scatterplot color and marker
+    """
+    
+    
     if fig == None or ax == None:
         fig = pp.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -112,7 +156,12 @@ def PlotAnnotated3D(x,y,z,title='', savefig = False, figfolder = '', name = 'pla
 
 def Simple3DSurf(x, y, z, xmod = 1000., ymod = 1000., zmod = 1000.,
                  fig = None, ax = None):
-    
+    """Create a simple 3-d surface plot of a x,y,z dataset \n
+    INPUT: \n
+    x,y,z: Data arrays [2d] \n
+    x/y/zmod: scale modifiers (def. 1000, converts to km) \n
+    fig,ax: Provide the function with an existing figure/axis ,otherwise create a new one. \n
+    """
     if fig == None or ax == None:
         fig = pp.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -123,7 +172,12 @@ def Simple3DSurf(x, y, z, xmod = 1000., ymod = 1000., zmod = 1000.,
 
 def Simple3DWireframe(x, y, z, xmod = 1000., ymod = 1000., zmod = 1000.,
                  fig = None, ax = None):
-    
+    """Create a simple 3-d wireframe plot of a x,y,z dataset \n
+    INPUT: \n
+    x,y,z: Data arrays [2d] \n
+    x/y/zmod: scale modifiers (def. 1000, converts to km) \n
+    fig,ax: Provide the function with an existing figure/axis ,otherwise create a new one. \n
+    """
     if fig == None or ax == None:
         fig = pp.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -137,6 +191,17 @@ def Simple3DWireframe(x, y, z, xmod = 1000., ymod = 1000., zmod = 1000.,
 def Simple2DImage(Image, title='', savefig = False, figfolder = '',
                   name = 'placeholder.png', xlabel = 'x [km]', ylabel = 'y [km]',
                   colormap = 'Greys_r', axes = ''):
+    """Create a simple 2-d image from a 2d array with color values \n
+    INPUT: \n
+    Image: image array \n
+    title: Title for figure \n
+    savefig: Save figure? \n
+    figfolder: folder to save figure in \n
+    name: file name \n
+    x/ylabel: labels to assign to x,y axes \n
+    colormap: colormap to use \n
+    axes: Provide the function with an existing figure/axis ,otherwise create a new one. \n
+    """
     
     L = Image.shape
     fig = pp.figure(figsize=(5,5))
@@ -187,7 +252,17 @@ def Simple2DImage(Image, title='', savefig = False, figfolder = '',
 def Simple2DPlot(x, y, title='', savefig = False, figfolder = '', name = 'placeholder.png',
                  xlabel = 'x [km]', ylabel = 'y [km]', zlabel='z [km]', xmod = 1000.,
                  ymod = 1000., xlim = None, ylim = None , fig = None, ax = None):
-    
+    """Create a simple 2-d plot from a x,y arrays \n
+    INPUT: \n
+    Image: image array \n
+    title: Title for figure \n
+    savefig: Save figure? \n
+    figfolder: folder to save figure in \n
+    name: file name \n
+    x/ylabel: labels to assign to x,y axes \n
+    colormap: colormap to use \n
+    axes: Provide the function with an existing figure/axis ,otherwise create a new one. \n
+    """
     if fig == None or ax == None:
         fig = pp.figure()
         ax = fig.add_subplot(11, projection='2d')
@@ -419,9 +494,14 @@ def UVWBaselinePlot(BLx,BLy,BLz, savefig = False, figfolder = '', name = 'placeh
     return fig,ax
 
 
-def BaselinePlot3DWithCost(BLx,BLy,BLz,cost,normals, savefig = False, figfolder = '', name = 'placeholder.png', xlabel = 'x [km]', ylabel = 'y [km]', zlabel='z [km]',
-                 scalemod=1e3):
-    
+def BaselinePlot3DWithCost(BLx,BLy,BLz,cost,normals, savefig = False, figfolder = '', name = 'placeholder.png', 
+                           xlabel = 'x [km]', ylabel = 'y [km]', zlabel='z [km]',
+                           scalemod=1e3):
+    """Plot the baseline profile in 3D with a cost profile porcupine overlapped\n
+    INPUT: \n
+    BLx,BLy,BLz: [n,m] arrays with baseline data. n direction is time \n
+    cost: [k] sized array with costs evaluated from a certain normal direction \n
+    normals: [3,k] sized array with normal vectors"""
     
     fig,ax = MakeFig(figsize=(20,14), dimensions='3D')
 
@@ -445,6 +525,7 @@ def BaselinePlot3DWithCost(BLx,BLy,BLz,cost,normals, savefig = False, figfolder 
 #%% Plot cost function visualisers
 
 def CostPorcupine3D(fig, ax, cost, normals,R):
+    """Create a 3-dimensional porcupine plot using a set of direction vectors and magnitudes"""
     cost_corrected = (cost/np.mean(cost))**4
     verts = R*normals*cost_corrected
     
@@ -459,10 +540,13 @@ def CostPorcupine3D(fig, ax, cost, normals,R):
 
 #%% QUALITY OF LIFE FUNCTIONS
 def ClearPlots():
+    """Close all figures"""
     pp.close("all")
     return
 
 def CloseAll():
+    """Close all figures\n
+    Legacy function"""
     pp.close("all")
     return
 
@@ -487,7 +571,7 @@ def MakeFig(figsize = None, dimensions = '2D', proj = 'persp'):
 def DressFig(fig, ax, title='', savefig = False, folder = '', name = 'placeholder.png',
                  xlabel = None, ylabel = None , zlabel=None, xlim = None, ylim = None,  zlim = None,
                  legendlist = None, logScale = False, logScaleX = False):
-    
+    """Dress up a figure and axes set with various commands to adjust its styling"""
     ax.set_title(title)    
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
@@ -515,7 +599,9 @@ def DressFig(fig, ax, title='', savefig = False, folder = '', name = 'placeholde
     return fig,ax
 
 def Animate3DPlotToGIF(fig, ax, filename, folder):
-    """Creates a /GIF/ folder in the given dir to store the frames and results"""
+    """Creates a /GIF/ folder in the given dir to store the frames and results
+    
+    Depricated method, preferred approach is class based now"""
     
     folder = folder + 'GIF/'
     folder_frames = folder + 'Frames/'
@@ -559,7 +645,7 @@ def Animate3DPlotToGIF(fig, ax, filename, folder):
 
 #%% Add widgets
 def AddAxesWidget(ax, pos=None, size=1):
-    
+    """Add a 3d widget to a 3-d figure showing the directions of the axes"""
     if pos == None:
         pos = [0,0,0]
         
@@ -571,7 +657,7 @@ def AddAxesWidget(ax, pos=None, size=1):
     return
 
 def AddVector(ax,p1,p2, color=None):
-
+    """Add a single vector between p1 and p2 to axes ax"""
     ax.quiver(p1[0],p1[1],p1[2],p2[0]-p1[0],p2[1]-p1[1],p2[2]-p1[2], length=1, color=color)
     return
 

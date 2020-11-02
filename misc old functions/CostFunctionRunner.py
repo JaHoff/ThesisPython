@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """
+DEPRECATE - PART OF SCRAPPED PART OF THESIS
+
 Minimal cost function runner file
 Created on Tue Jun  2 17:15:28 2020
 

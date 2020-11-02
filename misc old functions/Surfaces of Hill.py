@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+Code for experiments with the surfaces of Hill
 Created on Mon Aug 17 13:11:15 2020
 
 @author: mrfan

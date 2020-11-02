@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Plotting function container for all Mayavi related plots
+Plotting function container for 3D plot generation relying on Mayavi
 
 Contains several useful plotting algorithms for different data types
 Created on Thu Feb 20 16:17:04 2020
@@ -18,7 +18,13 @@ from tvtk.common import configure_input_data
 #%% Figure creation
 
 def MakeFig(figure,size=(600, 600), bgcolor = (0,0,0), fgcolor = (1,1,1), theme = None):
-    
+    """Create a figure \n
+    INPUTS: \n
+    figure: str, names the figure \n
+    size: size of the figure (x,y) in pixels\n
+    bgcolor: Color of the background \n
+    fgcolor: Color of the foreground \n
+    theme: Optional theme support. Select bgcolor and fgcolor based off a theme dictionary"""
     if theme != None:
         colors = themes[theme]
     
@@ -30,15 +36,18 @@ def MakeFig(figure,size=(600, 600), bgcolor = (0,0,0), fgcolor = (1,1,1), theme 
     return fig
 
 def Title(figure,title):
+    """Assign a title to a figure"""
     mlab.title(title, figure = figure)
     return 
 def CloseAll():
+    """Close all Mayavi figures"""
     mlab.close(all = True)
     return
 
 #%% Generalized plotting functions
 
 def PlotTextureSphere(fig,texture, R, Rscale=0, x=0, y=0, z=0, Nrad = 180):
+    """Plot a sphere with a certain texture, used for Earth"""
     # load and map the texture
     img = tvtk.JPEGReader()
     img.file_name = texture
@@ -62,6 +71,14 @@ def PlotTextureSphere(fig,texture, R, Rscale=0, x=0, y=0, z=0, Nrad = 180):
 
 
 def PlotColorSphere(fig, Rscale, x=0,y=0,z=0,R = 1, c = (1,1,1), Nrad = 180, opacity = 0.3):
+    """Plot a sphere with a certain color: \n
+    fig: figure to add sphere to \n
+    Rscale: Scale of the sphere \n
+    x,y,z: central coordinates \n
+    R: Radius of the sphere \n
+    c: (r,g,b) color of the sphere \n
+    Nrad: 3-d resolution of the sphere object \n
+    opacity: Opacity of the sphere"""
     
 
     # create the sphere source with a given radius and angular resolution
@@ -78,15 +95,17 @@ def PlotColorSphere(fig, Rscale, x=0,y=0,z=0,R = 1, c = (1,1,1), Nrad = 180, opa
     return sphere
 
 def PlotSurface(fig, x,y,z, lw = 1.0, cmap = 'jet', warp_scale = 1):
-
+    """Call mlab.surf to add it to a figure"""
     mlab.surf(x,y,z, colormap = cmap, figure = fig, line_width = lw, warp_scale = warp_scale)
     return
 
 def PlotMesh(fig, x,y,z, cmap = 'jet', lw = 2.0, opacity = 1.):
+    """Call mlab.mesh to add it to a figure"""
     mlab.mesh(x,y,z,figure = fig, colormap =  cmap, line_width = lw, opacity = opacity)
     return
 
 def Plot3DContour(fig, val, cmap = 'jet', lw = 2.0, opacity = 1., x=[], y=[], z=[]):
+    """Call mlab.contour3d to add it to a figure"""
     if (len(x) != 0):
         mlab.contour3d(x,y,z,val,figure = fig, colormap =  cmap, line_width = lw, opacity = opacity)
     else:
@@ -94,6 +113,7 @@ def Plot3DContour(fig, val, cmap = 'jet', lw = 2.0, opacity = 1., x=[], y=[], z=
     return
 
 def Plot3DQuiver(fig,u,v,w, x=[], y=[], z=[], lw = 3.0, sf = 1, cmap = "jet"):
+    """Call mlab.quiver3d to add it to a figure"""
     if len(x) != 0:
         mlab.quiver3d(x,y,z,u,v,w, figure=fig, line_width = lw, scale_factor = sf,colormap = cmap)
     else:
@@ -102,6 +122,13 @@ def Plot3DQuiver(fig,u,v,w, x=[], y=[], z=[], lw = 3.0, sf = 1, cmap = "jet"):
     return
 
 def Plot3D(fig, x, y, z, lw = 3.0, col = (1,1,1), scale = 1000, opacity = 1):
+    """Plot a 3d dataset into a figure \n
+    fig: figure to plot in \n
+    x,y,z: [n,m] data arrays. Splits lines using [:,i] to plot all values \n
+    lw: line-width \n
+    col: (r,g,b) color key \n
+    scale: Scaling to correct the image for (default 1000 /km ) \n
+    opacity: Opacity of the line to plot (default 1)"""
     if len(x.shape) == 2:
         N = x.shape[1]
     else:
@@ -169,6 +196,7 @@ def PlotAnimatedParticles(fig, x,y,z, lw = 3.0, theme = 'default', R =6378e3, sp
     return
 
 def AddDefaultAxes(fig = None, color = (1,1,1), Nlabels = 10, lw = 2, xlabel = '', ylabel = '', zlabel = '' ):
+    """Call mlab.axes to run on this figure"""
     mlab.axes(figure = fig, color = color, nb_labels = Nlabels, line_width = lw,
               xlabel=xlabel, ylabel=ylabel, zlabel=zlabel)
     return
@@ -269,6 +297,7 @@ def PlotAnimatedEarthOrbit( x,y,z, moon, L4, theme = 'default'):
     return fig
 
 def PlotAroundEarth(x,y,z, moondata, L4, plotMoonTrails = False):
+    """Plot the orbit of a dataset around the Earth with markers for the Moon, and L4"""
     EarthTex = 'EarthTex.jpg'
     # create a figure window (and scene)
     fig = MakeFig("Satellite swarm orbits around earth",size=(600, 600), bgcolor = (0,0,0))
@@ -291,7 +320,7 @@ def PlotAroundEarth(x,y,z, moondata, L4, plotMoonTrails = False):
     return fig
 
 #%% Theme setup
-
+# Define general themes as vectors of colors
 # values: mooncolor, l4 color, satcolor, bgcolor, fgcolor
 themes = {
     "default": ((1,0,0), (0,0,1), (0,1,0), (0,0,0), (1,1,1)),

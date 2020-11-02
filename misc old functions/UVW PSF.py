@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """
+Legacy code from very early work.
+
+Generate a PSF from a set of uvw baseline data
 Created on Tue Jan  7 20:23:27 2020
 
 @author: mrfan

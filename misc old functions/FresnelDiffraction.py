@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Generate figures related to Fresnel Diffraction of radiation around the moon
 
-This is a temporary script file.
 """
 
 import numpy as np

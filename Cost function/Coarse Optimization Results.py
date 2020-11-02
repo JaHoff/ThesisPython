@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
+Analyse the results of the coarse optimisation analysis
 Created on Sun May 31 14:29:34 2020
 
-@author: mrfan
+@author: Jurriaan
 """
 
 

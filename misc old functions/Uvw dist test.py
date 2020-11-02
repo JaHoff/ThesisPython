@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Testing code to grab uvw baselines from datasets, and using this.
+
+Legacy code from very early work.
+
 Created on Tue Dec 17 16:27:28 2019
 
-@author: USER
+@author: Jurriaan
 """
 
 import numpy as np;

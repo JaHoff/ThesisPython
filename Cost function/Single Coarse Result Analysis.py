@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+Analyse the result of a single coarse optimisation 
 Created on Sun May 31 14:29:34 2020
 
 @author: mrfan

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Cost function creation / test suite
+Investigate how the PSF scales with the sampling size resolution
 Created on Thu May  7 11:42:27 2020
 
 @author: USER
